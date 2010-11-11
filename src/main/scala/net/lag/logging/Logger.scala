@@ -333,7 +333,7 @@ object Logger {
       val item = manager.getLogger(e.nextElement.asInstanceOf[String])
       if (item ne null) loggers += get(item.getName)
     }
-    loggers.elements
+    loggers.iterator
   }
 
   /**

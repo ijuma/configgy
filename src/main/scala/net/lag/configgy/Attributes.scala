@@ -390,7 +390,7 @@ private[configgy] class Attributes(val config: Config, val name: String) extends
       case Some(a: Attributes) => a.copyInto(attr)
       case _ =>
     }
-    for ((key, value) <- cells.elements) {
+    for ((key, value) <- cells.iterator) {
       value match {
         case StringCell(x) => attr(key) = x
         case StringListCell(x) => attr(key) = x

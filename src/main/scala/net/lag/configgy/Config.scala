@@ -80,7 +80,7 @@ private class SubscriptionNode {
      */
     var nextNodes: Iterator[(String, SubscriptionNode)] = null
     key match {
-      case Nil => nextNodes = map.elements
+      case Nil => nextNodes = map.iterator
       case segment :: _ => {
         map.get(segment) match {
           case None => return     // done!
@@ -361,7 +361,7 @@ object Config {
    */
   def fromMap(m: Map[String, String]) = {
     val config = new Config
-    for ((k, v) <- m.elements) {
+    for ((k, v) <- m.iterator) {
       config(k) = v
     }
     config

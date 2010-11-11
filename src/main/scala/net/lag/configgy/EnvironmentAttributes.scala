@@ -26,14 +26,14 @@ import scala.collection.JavaConversions
  */
 private[configgy] object EnvironmentAttributes extends ConfigMap {
 
-  private val env = immutable.Map.empty[String, String] ++ (JavaConversions.asMap(System.getenv()).elements)
+  private val env = immutable.Map.empty[String, String] ++ (JavaConversions.asMap(System.getenv()).iterator)
 
   // deal with java.util.Properties extending
   // java.util.Hashtable[Object, Object] and not
   // java.util.Hashtable[String, String]
   private def getSystemProperties(): mutable.HashMap[String,String] = {
     val map = new mutable.HashMap[String, String]
-    for (entry <- JavaConversions.asMap(System.getProperties()).elements) {
+    for (entry <- JavaConversions.asMap(System.getProperties()).iterator) {
       entry match {
         case (k: String, v: String) => map.put(k, v)
         case _ =>
@@ -65,7 +65,7 @@ private[configgy] object EnvironmentAttributes extends ConfigMap {
   }
 
   def remove(key: String): Boolean = error("read-only attributes")
-  def keys: Iterator[String] = (getSystemProperties().keySet ++ env.keySet).elements
+  def keys: Iterator[String] = (getSystemProperties().keySet ++ env.keySet).iterator
   def asMap(): Map[String, String] = error("not implemented")
   def toConfigString = error("not implemented")
   def subscribe(subscriber: Subscriber): SubscriptionKey = error("not implemented")
